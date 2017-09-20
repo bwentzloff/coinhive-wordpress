@@ -28,6 +28,8 @@ add_action('wp_footer', 'coinhive_wordpress_add_javascript');
 
 function coinhive_settings_display() {
 	
+	check_admin_referer( 'coinhive-sitekey' );
+	
 	if (isset($_POST['coinhive_sitekey']) && (strlen($_POST['coinhive_sitekey']) == 32)) {
         update_option('coinhive_sitekey', sanitize_text_field($_POST['coinhive_sitekey']));
     }
