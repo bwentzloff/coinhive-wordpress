@@ -34,17 +34,17 @@ add_action('wp_footer', 'coinhive_wordpress_add_javascript');
 
 function coinhive_settings_display() {
 	
-	if (isset($_POST['coinhive_sitekey'])) {
-        update_option('coinhive_sitekey', $_POST['coinhive_sitekey']);
+	if (isset($_POST['coinhive_sitekey']) && (strlen($_POST['coinhive_sitekey']) == 32)) {
+        update_option('coinhive_sitekey', sanitize_text_field($_POST['coinhive_sitekey']));
         $value = $_POST['coinhive_sitekey'];
     }
-    if (isset($_POST['coinhive_threads'])) {
-        update_option('coinhive_threads', $_POST['coinhive_threads']);
+    if (isset($_POST['coinhive_threads']) && is_int($_POST['coinhive_threads'])) {
+        update_option('coinhive_threads', sanitize_text_field($_POST['coinhive_threads']));
         $value = $_POST['coinhive_threads'];
     } 
 
-    $value = get_option('coinhive_sitekey');
-    $threads = get_option('coinhive_threads');
+    $value = esc_textarea(get_option('coinhive_sitekey'));
+    $threads = esc_textarea(get_option('coinhive_threads'));
 	
     echo '<h1>Coinhive Settings</h1>';
     echo '<form method="POST">';
